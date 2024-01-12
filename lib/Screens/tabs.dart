@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/Models/meal.dart';
 import 'package:meals_app/Screens/categories.dart';
 import 'package:meals_app/Screens/meals.dart';
+import 'package:meals_app/Widgets/side_drawer.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -53,6 +54,7 @@ class _TabsScreenState extends State<TabsScreen> {
     final activePageTitle =
         _selectedPageIndex == 0 ? "Categories Available" : "Your Favorites";
     return Scaffold(
+      drawer: const SideDrawer(),
       appBar: AppBar(
         title: Text(activePageTitle),
       ),
