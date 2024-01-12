@@ -23,10 +23,22 @@ class _TabsScreenState extends State<TabsScreen> {
       () {
         if (_favoriteMeals.contains(meal)) {
           _favoriteMeals.remove(meal);
+          _showInfoMessage("Removed from Favorites");
         } else {
           _favoriteMeals.add(meal);
+          _showInfoMessage("Added to Favorites");
         }
       },
+    );
+  }
+
+  void _showInfoMessage(String message) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+      ),
     );
   }
 
