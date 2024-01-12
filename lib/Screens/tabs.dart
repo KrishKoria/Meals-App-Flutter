@@ -33,8 +33,11 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     Widget activePage = _selectedPageIndex == 0
-        ? const CategoriesScreen()
-        : const MealScreen(null, []);
+        ? CategoriesScreen(_toggleMealFavouriteStatus)
+        : MealScreen(
+            title: null,
+            meals: _favoriteMeals,
+            onToggleFavorite: _toggleMealFavouriteStatus);
     final activePageTitle =
         _selectedPageIndex == 0 ? "Categories Available" : "Your Favorites";
     return Scaffold(
