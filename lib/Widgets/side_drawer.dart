@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SideDrawer extends StatelessWidget {
-  const SideDrawer({super.key});
+  const SideDrawer({super.key, required this.onSelectScreen});
+  final void Function(String identifier) onSelectScreen;
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -54,7 +55,7 @@ class SideDrawer extends StatelessWidget {
                   ),
             ),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed('/');
+              onSelectScreen('Meals');
             },
           ),
           ListTile(
@@ -71,7 +72,7 @@ class SideDrawer extends StatelessWidget {
                   ),
             ),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed('/');
+              onSelectScreen('Filters');
             },
           ),
         ],

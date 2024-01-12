@@ -43,6 +43,12 @@ class _TabsScreenState extends State<TabsScreen> {
     );
   }
 
+  void _setScreen(String identifier) {
+    if (identifier == 'Meals') {
+      Navigator.of(context).pop();
+    } else if (identifier == 'Filters') {}
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget activePage = _selectedPageIndex == 0
@@ -54,7 +60,9 @@ class _TabsScreenState extends State<TabsScreen> {
     final activePageTitle =
         _selectedPageIndex == 0 ? "Categories Available" : "Your Favorites";
     return Scaffold(
-      drawer: const SideDrawer(),
+      drawer: SideDrawer(
+        onSelectScreen: _setScreen,
+      ),
       appBar: AppBar(
         title: Text(activePageTitle),
       ),
