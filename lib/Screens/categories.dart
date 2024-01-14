@@ -26,10 +26,13 @@ class _CategoriesScreenState extends State<CategoriesScreen>
       upperBound: 1.0,
       vsync: this,
     );
+
+    _animationController.forward();
   }
 
   @override
   void dispose() {
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -51,18 +54,31 @@ class _CategoriesScreenState extends State<CategoriesScreen>
 
   @override
   Widget build(BuildContext context) {
-    return GridView(
-      padding: const EdgeInsets.all(14),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 3 / 2,
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 20,
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (ctx, child) => SlideTransition(
+        position: Tween(
+          begin: const Offset(0, 0.3),
+          end: const Offset(0, 0),
+        ).animate(
+          CurvedAnimation(
+              parent: _animationController, curve: Curves.easeInOut),
+        ),
+        child: child,
       ),
-      children: [
-        for (final category in availableCategories)
-          CategoryItem(category, () => _selectCategory(context, category)),
-      ],
+      child: GridView(
+        padding: const EdgeInsets.all(14),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 3 / 2,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
+        ),
+        children: [
+          for (final category in availableCategories)
+            CategoryItem(category, () => _selectCategory(context, category)),
+        ],
+      ),
     );
   }
 }
