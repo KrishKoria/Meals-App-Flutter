@@ -1,20 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals_app/Models/meal.dart';
+import 'package:meals_app/Providers/favourites_provider.dart';
 
-class MealDetailsScreen extends StatelessWidget {
-  const MealDetailsScreen(
-      {required this.meal, required this.onToggleFavorite, super.key});
-  final void Function(Meal meal) onToggleFavorite;
+class MealDetailsScreen extends ConsumerWidget {
+  const MealDetailsScreen({required this.meal, super.key});
   final Meal meal;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
         actions: [
           IconButton(
             onPressed: () {
-              onToggleFavorite(meal);
+              final isAdded = ref
+                  .read(favouriteMealsProvider.notifier)
+                  .toggleFavouriteStatus(meal);
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    isAdded ? 'Added to Favourites' : 'Removed from Favourites',
+                  ),
+                  duration: const Duration(seconds: 1),
+                ),
+              );
             },
             icon: const Icon(Icons.favorite),
           ),
